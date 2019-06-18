@@ -14,7 +14,7 @@ public class ImageUpload1Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ImageUpload1Application.class, args);
-		System.err.print("hi");
+		System.err.print("Application started");
 	}
 
 }

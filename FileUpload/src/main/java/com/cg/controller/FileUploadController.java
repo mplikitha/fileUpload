@@ -27,7 +27,7 @@ public class FileUploadController {
 
 	@Autowired
 	public FileUploadController(FileStorageServiceImpl fileStorageServiceImpl) {
-		
+
 		this.fileStorageServiceImpl = fileStorageServiceImpl;
 	}
 
@@ -46,6 +46,37 @@ public class FileUploadController {
 		List<FileModel> files = fileStorageServiceImpl.getAllFiles();
 
 		return new ResponseEntity<List<FileModel>>(files, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/fileName=", method = RequestMethod.GET)
+	public ResponseEntity<?> getFileByName(@RequestParam String fileName) {
+
+		List<FileModel> fileByName = fileStorageServiceImpl.getFileByName(fileName);
+
+		if (!fileByName.isEmpty()) {
+			logger.info("file retrieved");
+			return new ResponseEntity<List<FileModel>>(fileByName, HttpStatus.OK);
+		} else {
+			logger.warn("file not found for given fileName");
+			return new ResponseEntity<String>("{\"message\": \"" + "no files with this name" + "\"}", HttpStatus.OK);
+		}
+
+	}
+
+	@RequestMapping(value = "/fileId", method = RequestMethod.GET)
+	public ResponseEntity<?> getFileById(@RequestParam long id) {
+
+		FileModel fileById = new FileModel();
+		fileById = fileStorageServiceImpl.getFileById(id);
+
+		if (!fileById.getFileName().isEmpty()) {
+			logger.info("file retrieved");
+			return new ResponseEntity<FileModel>(fileById, HttpStatus.OK);
+		} else {
+			logger.info("file not found for given id");
+			return new ResponseEntity<String>("{\"message\": \"" + "no files with this id" + "\"}", HttpStatus.OK);
+		}
+
 	}
 
 }
