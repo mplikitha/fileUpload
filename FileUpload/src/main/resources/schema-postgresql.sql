@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS images;
+
+CREATE TABLE images (id UNIQUE PRIMARY KEY,fileName VARCHAR(50), fileType VARCHAR(50), size INTEGER);
